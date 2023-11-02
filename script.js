@@ -49,12 +49,9 @@ let guessesRemaining = cards.length;
 
 const pointsElement = document.getElementById("points");
 const guessesLeft = document.getElementById("guessesLeft");
-const card = document.getElementById("card");
-const guessLower = document.getElementById("lower");
-const guessSame = document.getElementById("same");
-const guessHigher = document.getElementById("higher");
-const cardSymbols = document.querySelectorAll("#symbol");
-const cardNumber = document.querySelectorAll("#number");
+const cardsLeft = document.getElementById("cardsLeft");
+const cardSymbols = document.querySelectorAll("[data-container=symbol]");
+const cardNumber = document.querySelectorAll("[data-container=number]");
 const guessButtons = document.querySelectorAll("[data-guess]");
 
 const drawCard = (color, number) => {
@@ -73,6 +70,7 @@ const drawCard = (color, number) => {
 const onLoad = () => {
   guessesRemaining--;
   guessesLeft.innerHTML = `<strong>Försök kvar:</strong> ${guessesRemaining}`;
+  cardsLeft.innerHTML = `${guessesRemaining} kort kvar`;
 
   let randomIndex = Math.floor(Math.random() * cards.length);
   let randomCard = cards[randomIndex];
@@ -88,6 +86,7 @@ onLoad();
 const makeAGuess = (guess) => {
   guessesRemaining--;
   guessesLeft.innerHTML = `<strong>Försök kvar:</strong> ${guessesRemaining}`;
+  cardsLeft.innerHTML = `${guessesRemaining} kort kvar`;
 
   let randomIndex = Math.floor(Math.random() * cards.length);
   let randomCard = cards[randomIndex];
