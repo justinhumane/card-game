@@ -16,11 +16,11 @@ const values = [
 ];
 let cards = [];
 
-for (let x = 0; x < suites.length; x++) {
-  for (let i = 0; i < values.length; i++) {
-    cards.push({ suite: suites[x], number: values[i], value: i });
-  }
-}
+suites.forEach((suite) => {
+  values.forEach((value, i) => {
+    cards.push({ suite: suite, number: value, value: i });
+  });
+});
 
 let points = 0;
 let previousCard;
