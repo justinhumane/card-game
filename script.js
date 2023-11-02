@@ -1,4 +1,25 @@
-const suites = ["hearts", "diamonds", "clubs", "spades"];
+const suites = [
+  {
+    suite: "hearts",
+    color: "red",
+    icon: "♥",
+  },
+  {
+    suite: "diamons",
+    color: "red",
+    icon: "♦",
+  },
+  {
+    suite: "clubs",
+    color: "black",
+    icon: "♣",
+  },
+  {
+    suite: "spades",
+    color: "black",
+    icon: "♠",
+  },
+];
 const values = [
   "2",
   "3",
@@ -18,7 +39,7 @@ let cards = [];
 
 suites.forEach((suite) => {
   values.forEach((value, i) => {
-    cards.push({ suite: suite, number: value, value: i });
+    cards.push({ suite: suite.suite, number: value, value: i });
   });
 });
 
@@ -32,37 +53,18 @@ const card = document.getElementById("card");
 const guessLower = document.getElementById("lower");
 const guessSame = document.getElementById("same");
 const guessHigher = document.getElementById("higher");
-const cardSymbol = document.querySelectorAll("#symbol");
+const cardSymbols = document.querySelectorAll("#symbol");
 const cardNumber = document.querySelectorAll("#number");
+const guessButtons = document.querySelectorAll("[data-guess]");
 
 const drawCard = (color, number) => {
-  if (color === "hearts") {
-    cardSymbol.forEach((cardSymbol) => {
-      cardSymbol.innerText = "♥";
-      cardSymbol.className = "red";
-    });
-  }
+  let cardSuite = suites.find((s) => s.suite === color);
 
-  if (color === "spades") {
-    cardSymbol.forEach((cardSymbol) => {
-      cardSymbol.innerText = "♠";
-      cardSymbol.className = "black";
-    });
-  }
+  cardSymbols.forEach((cardSymbol) => {
+    cardSymbol.innerText = cardSuite.icon;
+    cardSymbol.className = cardSuite.color;
+  });
 
-  if (color === "diamonds") {
-    cardSymbol.forEach((cardSymbol) => {
-      cardSymbol.innerText = "♦";
-      cardSymbol.className = "red";
-    });
-  }
-
-  if (color === "clubs") {
-    cardSymbol.forEach((cardSymbol) => {
-      cardSymbol.innerText = "♣";
-      cardSymbol.className = "black";
-    });
-  }
   cardNumber.forEach((cardNumber) => {
     cardNumber.innerText = number;
   });
@@ -107,12 +109,15 @@ const makeAGuess = (guess) => {
   previousCard = randomCard;
 
   if (guessesRemaining === 0) {
-    guessLower.disabled = true;
-    guessSame.disabled = true;
-    guessHigher.disabled = true;
+    guessButtons.forEach((guessButton) => {
+      guessButton.disabled = true;
+    });
   }
 };
 
-guessLower.addEventListener("click", () => makeAGuess("lower"));
-guessSame.addEventListener("click", () => makeAGuess("same"));
-guessHigher.addEventListener("click", () => makeAGuess("higher"));
+guessButtons.forEach((guessButton) => {
+  guessButton.addEventListener("click", (event) => {
+    const guess = event.currentTarget.getAttribute("data-guess");
+    makeAGuess(guess);
+  });
+});
