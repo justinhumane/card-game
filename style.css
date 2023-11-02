@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background: rgb(86, 236, 161);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+header,
+main,
+footer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+button {
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 2px solid #000;
+  margin: 0;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:first-child {
+  border-radius: 1rem 0 0 1rem;
+  border-right: 0;
+}
+
+button:last-child {
+  border-radius: 0 1rem 1rem 0;
+  border-left: 0;
+}
+
+.card {
+  width: 20rem;
+  height: 30rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.numsym {
+  text-align: center;
+}
+
+.numsym:first-child {
+  align-self: start;
+}
+
+.numsym:last-child {
+  align-self: end;
+  transform: rotate(180deg);
+}
+
+.numsym div:first-child {
+  font-size: 2rem;
+}
+
+.card > #symbol {
+  font-size: 5rem;
+}
+
+.red {
+  color: red;
+}
+
+.black {
+  color: black;
+}
