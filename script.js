@@ -45,7 +45,8 @@ suites.forEach((suite) => {
 
 let points = 0;
 let previousCard;
-let guessesRemaining = cards.length;
+let guessesRemaining = 3;
+let cardsRemaining = cards.length;
 
 const pointsElement = document.getElementById("points");
 const guessesLeft = document.getElementById("guessesLeft");
@@ -68,9 +69,9 @@ const drawCard = (color, number) => {
 };
 
 const onLoad = () => {
-  guessesRemaining--;
+  cardsRemaining--;
   guessesLeft.innerHTML = `<strong>Försök kvar:</strong> ${guessesRemaining}`;
-  cardsLeft.innerHTML = `${guessesRemaining} kort kvar`;
+  cardsLeft.innerHTML = `${cardsRemaining} kort kvar`;
 
   let randomIndex = Math.floor(Math.random() * cards.length);
   let randomCard = cards[randomIndex];
@@ -84,25 +85,27 @@ const onLoad = () => {
 onLoad();
 
 const makeAGuess = (guess) => {
-  guessesRemaining--;
-  guessesLeft.innerHTML = `<strong>Försök kvar:</strong> ${guessesRemaining}`;
-  cardsLeft.innerHTML = `${guessesRemaining} kort kvar`;
+  cardsRemaining--;
+  cardsLeft.innerHTML = `${cardsRemaining} kort kvar`;
 
   let randomIndex = Math.floor(Math.random() * cards.length);
   let randomCard = cards[randomIndex];
   drawCard(randomCard.suite, randomCard.number);
 
-  if (guess === "lower" && previousCard.value > randomCard.value) {
+  if (
+    (guess === "lower" && previousCard.value > randomCard.value) ||
+    (guess === "same" && previousCard.value == randomCard.value) ||
+    (guess === "higher" && previousCard.value < randomCard.value)
+  ) {
     points++;
-  }
-  if (guess === "same" && previousCard.value == randomCard.value) {
-    points++;
-  }
-  if (guess === "higher" && previousCard.value < randomCard.value) {
-    points++;
+  } else {
+    guessesRemaining--;
+    guessesLeft.innerHTML = `<strong>Försök kvar:</strong> ${guessesRemaining}`;
   }
 
   cards.splice(randomIndex, 1);
+
+  console.log(cards);
 
   pointsElement.innerHTML = `<strong>Poäng:</strong> ${points}`;
   previousCard = randomCard;
@@ -111,6 +114,9 @@ const makeAGuess = (guess) => {
     guessButtons.forEach((guessButton) => {
       guessButton.disabled = true;
     });
+    setTimeout(() => {
+      alert("Du förlorade!");
+    }, 200);
   }
 };
 
